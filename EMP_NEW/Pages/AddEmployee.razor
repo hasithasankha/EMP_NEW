@@ -1,0 +1,61 @@
+﻿@page "/AddEmployee"
+@using EMP_NEW.Data
+@inject EMP_NEW.Service.EmployeeService employeeService
+@inject NavigationManager NavigationManager
+
+ <h2>Add New Employee</h2>
+  <form>
+      <div class="row">
+          <div class="col-md-8">
+              
+
+            <div class="form-group">
+                <div class="form-group">
+                    <lable for="Name" class="Contro-label">Name</lable>
+                    <input form="Name" class="form-control" @bind="@employee.Name"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <lable for="Name" class="Contro-label">City</lable>
+                    <input form="Name" class="form-control" @bind="@employee.City" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <lable for="Name" class="Contro-label">Country</lable>
+                    <input form="Name" class="form-control" @bind="@employee.Country" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="Name" class="Control-label">PhoneNumber</label>
+                    <input type="text" id="Name" class="form-control" @bind="@employee.PhoneNumber" />
+                </div>
+                <div class="form-group">
+                    <input type="button" value="Submit Employee" @onclick="@CreateEmployee" class="btn btn-primary" />
+
+                    <input type="button" value="Cancel" @onclick="@Cancel" class="btn btn-primary" />
+                </div>
+            </div>
+
+
+          </div>
+      </div>
+  </form>
+
+@code {
+    Data.Employee employee = new Data.Employee();
+    protected void CreateEmployee()
+    {
+        employeeService.CreateEmployee(employee);
+        NavigationManager.NavigateTo("EmployeeList");
+
+    }
+    void Cancel()
+    {
+
+        NavigationManager.NavigateTo("EmployeeList");
+    }
+
+}

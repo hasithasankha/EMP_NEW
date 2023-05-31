@@ -14,5 +14,8 @@ namespace EMP_NEW.Data
         public string Country { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
+
+        //Department department { get; set; }
+
     }
 }

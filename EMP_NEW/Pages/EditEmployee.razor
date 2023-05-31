@@ -1,5 +1,71 @@
-﻿<h3>EditEmployee</h3>
+﻿@page "/EditEmployee/{CurrentID}"
+@using EMP_NEW.Data
+@inject EMP_NEW.Service.EmployeeService employeeService
+@inject NavigationManager NavigationManager
+@inject Service.EmployeeService objEmployeeService
+
+<h2>Update Employee</h2>
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-grop">
+                <input  form="Name" class="form-control" @bind=@employee.EmployeeId/>
+            </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    <lable for="Name" class="Contro-label">Name</lable>
+                    <input form="Name" class="form-control" @bind="@employee.Name" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <lable for="Name" class="Contro-label">City</lable>
+                    <input form="Name" class="form-control" @bind="@employee.City" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <lable for="Name" class="Contro-label">Country</lable>
+                    <input form="Name" class="form-control" @bind="@employee.Country" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="Name" class="Control-label">PhoneNumber</label>
+                    <input type="text" id="Name" class="form-control" @bind="@employee.PhoneNumber" />
+                </div>
+                <div class="form-group">
+                    <input type="button" value="Submit Employee" @onclick="@UpdateEmployee" class="btn btn-primary" />
+
+                    <input type="button" value="Cancel" @onclick="@Cancel" class="btn btn-primary" />
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</form>
 
 @code {
+    [Parameter]
+    public string CurrentID { get; set;}
+    Data.Employee employees = new  Data.Employee();
+
+    protected override async Task OnInitializedAsync() => employees = await Task.Run(() => objEmployeeService.GetEmployeeById(Convert.ToInt32(CurrentID)));
+
+
+    Data.Employee employee = new Data.Employee();
+    protected void UpdateEmployee()
+    {
+        employeeService.UpdateEmployee(employee);
+        NavigationManager.NavigateTo("EmployeeList");
+
+    }
+    void Cancel()
+    {
+
+        NavigationManager.NavigateTo("EmployeeList");
+    }
 
 }

@@ -32,6 +32,7 @@ namespace EMP_NEW
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<EmployeeService>();
+            services.AddScoped<DepartmentService>();
             services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConString")));
         }
 

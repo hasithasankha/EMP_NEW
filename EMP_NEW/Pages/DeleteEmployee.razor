@@ -1,5 +1,62 @@
-﻿<h3>DeleteEmployee</h3>
+﻿@page "/DeleteEmployee/{CurrentID}"
+@using EMP_NEW.Data
+@inject EMP_NEW.Service.EmployeeService employeeService
+@inject NavigationManager NavigationManager
+@inject Service.EmployeeService objEmployeeService
+
+<h2>Delete Employee</h2><hr />
+<h3>Are You Sure to delete this Empolyee ???</h3>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="form-group">
+            <label>Name</label>
+            <label>@employee.Name</label>
+        </div>
+
+        <div class="form-group">
+            <label>City</label>
+            <label>@employee.City</label>
+        </div>
+
+        <div class="form-group">
+            <label>Country</label>
+            <label>@employee.Country</label>
+        </div>
+
+        <div class="form-group">
+            <label>PhoneNumber</label>
+            <label>@employee.PhoneNumber</label>
+        </div>
+        <div class="form-group">
+            <input type="button" value="Delete Employee" @onclick="@DeleteEmployees" class="btn btn-primary" />
+
+            <input type="button" value="Cancel" @onclick="@Cancel" class="btn btn-primary" />
+        </div>
+        
+
+    </div>
+</div>
 
 @code {
+    [Parameter]
+    public string CurrentID { get; set; }
+    Data.Employee employees = new Data.Employee();
+
+    protected override async Task OnInitializedAsync() => employees = await Task.Run(() => objEmployeeService.GetEmployeeById(Convert.ToInt32(CurrentID)));
+
+
+    Data.Employee employee = new Data.Employee();
+    protected void DeleteEmployees()
+    {
+        employeeService.DeleteEmployee(employee);
+        NavigationManager.NavigateTo("EmployeeList");
+
+    }
+    void Cancel()
+    {
+
+        NavigationManager.NavigateTo("EmployeeList");
+    }
 
 }

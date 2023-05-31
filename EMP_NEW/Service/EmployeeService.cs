@@ -23,7 +23,7 @@ namespace EMP_NEW.Service
             return empLoyeeList;
         }
         // get employee by employee id 
-        public Employee GetEmployee(int id)
+        public Employee GetEmployeeById (int id)
         {
             // get  employee data using employee id
             Employee employee = _dbContext.Employees.FirstOrDefault(s => s.EmployeeId == id);
@@ -32,13 +32,31 @@ namespace EMP_NEW.Service
         }
 
         // insert Employee data
-        public string CreateEmployee(Employee employee) {
+        public string CreateEmployee(Employee employee)
+        {
             //Add employee data 
             _dbContext.Employees.Add(employee);
             //Update database employee data 
             _dbContext.SaveChanges();
-            return employee.Name+" Added successfully";
+            return employee.Name + " Added successfully";
         }
+
+        //        public string CreateEmployee(Employee employee)
+        //{
+        //    // Add employee data
+        //    _dbContext.Employees.Add(employee);
+
+        //    // Update department reference
+        //    var department = _dbContext.Departments.FirstOrDefault(d => d.DepartmentId == employee.DepartmentId);
+        //    employee.Department = department;
+
+        //    // Update database employee data 
+        //    _dbContext.SaveChanges();
+
+        //    return employee.Name + " added successfully";
+        //}
+
+
         //Update employee data 
         public string UpdateEmployee(Employee employee) {
             //Update employee data 

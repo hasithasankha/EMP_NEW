@@ -1,0 +1,61 @@
+﻿@page "/EditDepartment/{CurrentID}"
+@using EMP_NEW.Data
+@inject EMP_NEW.Service.DepartmentService departmentService
+@inject NavigationManager NavigationManager
+@inject Service.DepartmentService objDepartmentService
+
+<h2>Update Department</h2>
+<form>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-grop">
+                <input form="Name" class="form-control" @bind=@department.DepartmentId />
+            </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    <lable for="Name" class="Contro-label">DepartmentName</lable>
+                    <input form="Name" class="form-control" @bind="@department.DepartmentName" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="Name" class="Control-label">PhoneNumber</label>
+                    <input type="text" id="Name" class="form-control" @bind="@department.PhoneNumber" />
+                </div>
+
+                <div class="form-group">
+                    <input type="button" value="Submit Department" @onclick="@UpdateDepartments" class="btn btn-primary" />
+
+                    <input type="button" value="Cancel" @onclick="@Cancel" class="btn btn-primary" />
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</form>
+
+@code {
+    [Parameter]
+    public string CurrentID { get; set; }
+    Data.Department department = new Data.Department();
+
+    protected override async Task OnInitializedAsync() => department = await Task.Run(() => objDepartmentService.GetDepartmentById(Convert.ToInt32(CurrentID)));
+
+
+    Data.Department departments = new Data.Department();
+    protected void UpdateDepartments()
+    {
+        departmentService.UpdateDepartment(departments);
+        NavigationManager.NavigateTo("DepartmentList");
+
+    }
+    void Cancel()
+    {
+
+        NavigationManager.NavigateTo("DepartmentList");
+    }
+
+}

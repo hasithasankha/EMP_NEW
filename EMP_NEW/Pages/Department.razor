@@ -1,0 +1,69 @@
+﻿@page "/DepartmentList"
+@using EMP_NEW.Data
+@inject Service.DepartmentService objDepartmentService
+
+<h1>Department Informations</h1>
+<div style="text-align: right;">
+    <button class="btn btn-primary" onclick="window.location.href = 'AddDepartment'">
+        <span class="oi oi-pl" aria-hidden="true"></span>
+        Add New Department
+    </button>
+</div>
+<br />
+
+
+@if (department == null)
+{
+    <h1>Department Informations not avalible</h1>
+    <p><em> Loding.......!</em></p>
+}
+else
+{
+
+
+    <table id="employeeTable" class="table">
+        <thead>
+            <tr>
+                <th>Department Id</th>
+                <th>DepartmentName</th>
+                <th>PhoneNumber</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var department in department)
+            {
+                <tr>
+                    <td>@department.DepartmentId</td>
+                    <td>@department.DepartmentName</td>
+                    <td>@department.PhoneNumber</td>       
+                    <td>
+                        <a class="edit-link" href="EditDepartment/{CurrentID}" data-department-id="@department.DepartmentId">
+                            Edit
+                        </a>
+                    </td>
+                    <td>
+                        <a class="delete-link" href="DeleteDepartment/{CurrentID}" data-department-id="@department.DepartmentId">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+}
+
+
+@code {
+    List<Data.Department> department;
+
+    protected override async Task OnInitializedAsync()
+    {
+        department = await Task.Run(() => objDepartmentService.GetDepartments());
+    }
+
+}
